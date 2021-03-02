@@ -43,7 +43,7 @@ async function test(dd){
     for(let item of dd){
         let cookieJar = new tough.CookieJar();
         let rr = await run(cookieJar,item)
-        console.log(dd.name,rr)
+        console.log(item.name,rr)
     }
 }
 let dd =JSON.parse(process.env.COOKIESET)
