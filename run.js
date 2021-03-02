@@ -4,10 +4,7 @@ const tough = require('tough-cookie');
 
 axiosCookieJarSupport(axios);
 
-const cookieJar = new tough.CookieJar();
-
-
-let run = async function (param) {
+let run = async function (cookieJar,param) {
     if (!(await check(param))) return '需要登录';
     var resp = await axios.get('https://gkdworld.xyz/plugin.php?id=k_misign:sign', {
         jar: cookieJar, // tough.CookieJar or boolean
@@ -33,23 +30,21 @@ let run = async function (param) {
 };
 
 let check = async function (param) {
-    var resp = await axios.get('https://gkdworld.xyz/home.php?mod=spacecp&ac=usergroup');
-    if (/需要先登录/.test(resp.data)) {
-        let resp = await axios.post(
-            'https://gkdworld.xyz/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1',
-            `username=${param.name}&cookietime=2592000&password=${param.pwd}&quickforward=yes&handlekey=ls`
-        ,{
-
+    let resp = await axios.post(
+        'https://gkdworld.xyz/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1',
+        `username=${param.name}&cookietime=2592000&password=${param.pwd}&quickforward=yes&handlekey=ls`
+        , {
             jar: cookieJar, // tough.CookieJar or boolean
             withCredentials: true, // If true, send cookie stored in jar
         });
-        return !/登录失败/.test(resp.data);
-    } else return true;
+    return !/登录失败/.test(resp.data);
 };
 async function test(dd){
     for(let item of dd){
-        let rr = await run(item)
+        let cookieJar = new tough.CookieJar();
+        let rr = await run(cookieJar,item)
         console.log(rr)
+        sleep(1000)
     }
 }
 let dd =JSON.parse(process.env.COOKIESET)
