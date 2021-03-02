@@ -12,13 +12,6 @@ on:
 jobs:
   daily-task:
     if: github.event.repository.owner.id == github.event.sender.id
-
-    env:
-      ENABLE_52POJIE: ${{secrets.ENABLE_52POJIE}}
-      ENABLE_BILIBILI: ${{secrets.ENABLE_BILIBILI}}
-      ENABLE_IQIYI: ${{secrets.ENABLE_IQIYI}}
-      ENABLE_UNICOM: ${{secrets.ENABLE_UNICOM}}
-    
     runs-on: ubuntu-latest
 
     strategy:
