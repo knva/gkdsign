@@ -50,7 +50,6 @@ async function test(dd){
     for(let item of dd){
         let rr = await run(item)
         console.log(rr)
-        sleep(1000)
     }
 }
 let dd =JSON.parse(process.env.COOKIESET)
