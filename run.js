@@ -5,7 +5,7 @@ const tough = require('tough-cookie');
 axiosCookieJarSupport(axios);
 
 let run = async function (cookieJar,param) {
-    if (!(await check(param))) return '需要登录';
+    if (!(await check(cookieJar,param))) return '需要登录';
     var resp = await axios.get('https://gkdworld.xyz/plugin.php?id=k_misign:sign', {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
@@ -29,7 +29,7 @@ let run = async function (cookieJar,param) {
     } else throw '未成功签到';
 };
 
-let check = async function (param) {
+let check = async function (cookieJar,param) {
     let resp = await axios.post(
         'https://gkdworld.xyz/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1',
         `username=${param.name}&cookietime=2592000&password=${param.pwd}&quickforward=yes&handlekey=ls`
