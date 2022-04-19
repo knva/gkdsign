@@ -4,7 +4,7 @@
  
 2：fork本仓库  
 
-3：setting 设置 Actions secrets
+3：setting 设置 Actions secrets 
 
 格式如下
 
