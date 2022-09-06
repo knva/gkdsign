@@ -6,20 +6,20 @@ axiosCookieJarSupport(axios);
 
 let run = async function (cookieJar,param) {
     if (!(await check(cookieJar,param))) return '需要登录';
-    var resp = await axios.get('https://gkdworld.xyz/plugin.php?id=k_misign:sign', {
+    var resp = await axios.get('https://gkdforum.eu.org/plugin.php?id=k_misign:sign', {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
     });
     if (/您的签到排名/.test(resp.data)) return '重复签到';
     let result = resp.data.match(/<a id="JD_sign" href="(.*?)"/);
     if (result == null) throw 'Not found JD_sign';
-    var resp1 = await axios.get('https://gkdworld.xyz/' + result[1], {
+    var resp1 = await axios.get('https://gkdforum.eu.org/' + result[1], {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
     });
     if (/今日已签/.test(resp1.data)) return '重复签到';
     if (/需要先登录/.test(resp1.data)) throw '需要登录';
-    var resp2 = await axios.get('https://gkdworld.xyz/plugin.php?id=k_misign:sign', {
+    var resp2 = await axios.get('https://gkdforum.eu.org/plugin.php?id=k_misign:sign', {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
     });
@@ -31,7 +31,7 @@ let run = async function (cookieJar,param) {
 
 let check = async function (cookieJar,param) {
     let resp = await axios.post(
-        'https://gkdworld.xyz/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1',
+        'https://gkdforum.eu.org/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1',
         `username=${param.name}&cookietime=2592000&password=${param.pwd}&quickforward=yes&handlekey=ls`
         , {
             jar: cookieJar, // tough.CookieJar or boolean
