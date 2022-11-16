@@ -13,7 +13,7 @@ let run = async function (cookieJar,param) {
     if (/您的签到排名/.test(resp.data)) return '重复签到';
     let result = resp.data.match(/<a id="JD_sign" href="(.*?)"/);
     if (result == null) throw 'Not found JD_sign';
-    var resp1 = await axios.get('https://gkdforum.eu.org/' + result[1], {
+    var resp1 = await axios.get(`https://${baseUrl}/` + result[1], {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
     });
