@@ -3,10 +3,10 @@ const axiosCookieJarSupport = require('axios-cookiejar-support').default;
 const tough = require('tough-cookie');
 
 axiosCookieJarSupport(axios);
-
+var baseUrl = "gkdworld.cf";
 let run = async function (cookieJar,param) {
     if (!(await check(cookieJar,param))) return '需要登录';
-    var resp = await axios.get('https://gkdforum.eu.org/plugin.php?id=k_misign:sign', {
+    var resp = await axios.get(`https://${baseUrl}/plugin.php?id=k_misign:sign`, {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
     });
@@ -19,7 +19,7 @@ let run = async function (cookieJar,param) {
     });
     if (/今日已签/.test(resp1.data)) return '重复签到';
     if (/需要先登录/.test(resp1.data)) throw '需要登录';
-    var resp2 = await axios.get('https://gkdforum.eu.org/plugin.php?id=k_misign:sign', {
+    var resp2 = await axios.get(`https://${baseUrl}/plugin.php?id=k_misign:sign`, {
         jar: cookieJar, // tough.CookieJar or boolean
         withCredentials: true, // If true, send cookie stored in jar
     });
@@ -31,7 +31,7 @@ let run = async function (cookieJar,param) {
 
 let check = async function (cookieJar,param) {
     let resp = await axios.post(
-        'https://gkdforum.eu.org/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1',
+        `https://${baseUrl}/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1`,
         `username=${param.name}&cookietime=2592000&password=${param.pwd}&quickforward=yes&handlekey=ls`
         , {
             jar: cookieJar, // tough.CookieJar or boolean
