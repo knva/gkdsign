@@ -37,10 +37,6 @@ let run = async function (cookieJar, param) {
       withCredentials: true, // If true, send cookie stored in jar
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-      },
-      proxy: {
-        host: '127.0.0.1',
-        port: 8888,
       }
     }
   );
